@@ -1,0 +1,119 @@
+import 'package:frontend_mobile/app/modules/build_cv/views/build_cv_view2.dart';
+import 'package:frontend_mobile/app/modules/profile/views/edit_education.dart';
+import 'package:frontend_mobile/app/modules/profile/views/edit_experience.dart';
+import 'package:frontend_mobile/app/modules/profile/views/edit_personalinfo.dart';
+import 'package:frontend_mobile/app/modules/profile/views/edit_skill.dart';
+import 'package:frontend_mobile/app/modules/profile/views/edit_user.dart';
+import 'package:get/get.dart';
+
+import '../modules/build_cv/bindings/build_cv_binding.dart';
+import '../modules/build_cv/views/build_cv_view.dart';
+import '../modules/detail_konten/bindings/detail_konten_binding.dart';
+import '../modules/detail_konten/views/detail_konten_view.dart';
+import '../modules/deteksi/bindings/deteksi_binding.dart';
+import '../modules/deteksi/views/deteksi_view.dart';
+import '../modules/history_deteksi/bindings/history_deteksi_binding.dart';
+import '../modules/history_deteksi/views/history_deteksi_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/konten/bindings/konten_binding.dart';
+import '../modules/konten/views/konten_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/onboarding/bindings/onboarding_binding.dart';
+import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/register/bindings/register_binding.dart';
+import '../modules/register/views/register_view.dart';
+
+part 'app_routes.dart';
+
+class AppPages {
+  AppPages._();
+
+  static const INITIAL = Routes.ONBOARDING;
+
+  static final routes = [
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ONBOARDING,
+      page: () => const OnboardingView(),
+      binding: OnboardingBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETEKSI,
+      page: () => const DeteksiView(),
+      binding: DeteksiBinding(),
+    ),
+    GetPage(
+      name: _Paths.KONTEN,
+      page: () => const KontenView(),
+      binding: KontenBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_KONTEN,
+      page: () => const DetailKontenView(),
+      binding: DetailKontenBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.HISTORY_DETEKSI,
+      page: () => const HistoryDeteksiView(),
+      binding: HistoryDeteksiBinding(),
+    ),
+    GetPage(
+      name: _Paths.BUILD_CV,
+      page: () => const BuildCvView(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.BUILD_HOME_CV,
+      page: () => const CvBuilderHomeView(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_PERSONAL,
+      page: () => EditPersonalInfo(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_EDUCATION,
+      page: () => EditEducation(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_EXPERIENCE,
+      page: () => EditExperience(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_SKILL,
+      page: () => EditSkill(),
+      binding: BuildCvBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_USER,
+      page: () => EditUser(),
+      binding: ProfileBinding(),
+    ),
+  ];
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - {% if data_user and data_user.nama_lengkap %}{{ data_user.nama_lengkap }}{% else %}Curriculum Vitae{% endif %}</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Times New Roman', serif;
+      line-height: 1.4;
+      color: #000;
+      background: #fff;
+      font-size: 11pt;
+    }
+
+    .cv-container {
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20mm;
+      min-height: 297mm;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    /* Header Section */
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+    }
+
+    .name {
+      font-size: 18pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .contact-info {
+      font-size: 10pt;
+      line-height: 1.3;
+    }
+
+    .contact-info a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    .location {
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    /* Profile Summary */
+    .profile-summary {
+      margin: 15px 0;
+      text-align: justify;
+      font-size: 10pt;
+    }
+
+    /* Section Headers */
+    .section {
+      margin: 20px 0;
+    }
+
+    .section-title {
+      font-size: 12pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* Education Section */
+    .education-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .education-left {
+      flex: 1;
+    }
+
+    .education-right {
+      text-align: right;
+      min-width: 100px;
+    }
+
+    .institution {
+      font-weight: bold;
+    }
+
+    .degree {
+      font-style: italic;
+      font-size: 10pt;
+    }
+
+    .year {
+      font-weight: bold;
+    }
+
+    /* Skills Section */
+    .skills-category {
+      margin-bottom: 8px;
+    }
+
+    .skill-type {
+      font-weight: bold;
+      display: inline-block;
+      width: 120px;
+      vertical-align: top;
+    }
+
+    .skill-list {
+      display: inline-block;
+      width: calc(100% - 130px);
+    }
+
+    /* Experience Section */
+    .experience-item {
+      margin-bottom: 15px;
+    }
+
+    .experience-header {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+
+    .experience-period {
+      font-style: italic;
+      font-size: 10pt;
+      margin-bottom: 5px;
+    }
+
+    .experience-description {
+      text-align: justify;
+      margin-left: 10px;
+      font-size: 10pt;
+    }
+
+    /* Empty state */
+    .empty-section {
+      font-style: italic;
+      color: #666;
+      text-align: center;
+      padding: 10px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        margin: 0;
+        font-size: 10pt;
+      }
+      
+      .cv-container {
+        box-shadow: none;
+        margin: 0;
+        padding: 15mm;
+        max-width: none;
+      }
+      
+      .section {
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cv-container {
+        padding: 15px;
+        margin: 10px;
+      }
+      
+      .education-item {
+        flex-direction: column;
+      }
+      
+      .education-right {
+        text-align: left;
+        margin-top: 3px;
+      }
+      
+      .skill-type {
+        width: 100%;
+        display: block;
+      }
+      
+      .skill-list {
+        width: 100%;
+        display: block;
+        margin-left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cv-container">
+    
+    <!-- Header Section -->
+    <div class="header">
+      <div class="name">
+        {% if data_user and data_user.nama_lengkap %}
+          {{ data_user.nama_lengkap|upper }}
+        {% else %}
+          [NAMA LENGKAP]
+        {% endif %}
+      </div>
+      <div class="contact-info">
+        {% if data_user and data_user.no_telp %}{{ data_user.no_telp }}{% else %}[No. Telepon]{% endif %} | 
+        {% if user and user.email %}
+          <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+        {% else %}
+          [Email]
+        {% endif %} |
+        {% if data_user and data_user.linkedin %}
+          <a href="{{ data_user.linkedin }}" target="_blank">{{ data_user.linkedin }}</a>
+        {% else %}
+          [LinkedIn]
+        {% endif %}
+        <div class="location">
+          {% if data_user and data_user.alamat %}{{ data_user.alamat }}{% else %}[Alamat]{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Summary -->
+    {% if data_user and data_user.summary %}
+    <div class="profile-summary">
+      {{ data_user.summary }}
+    </div>
+    {% endif %}
+
+    <!-- Education Section -->
+    <div class="section">
+      <div class="section-title">Pendidikan</div>
+      {% if pendidikan and pendidikan|length > 0 %}
+        {% for edu in pendidikan %}
+        <div class="education-item">
+          <div class="education-left">
+            <div class="institution">{{ edu.instansi if edu.instansi else '[Nama Institusi]' }}</div>
+            <div class="degree">
+              {{ edu.jenjang.value if edu.jenjang else '' }}
+              {% if edu.jurusan %}{{ edu.jurusan }}{% endif %}
+              {% if not edu.jenjang and not edu.jurusan %}[Jenjang & Jurusan]{% endif %}
+            </div>
+          </div>
+          <div class="education-right">
+            <div class="year">
+              {% if edu.tahun_mulai and edu.tahun_selesai %}
+                {{ edu.tahun_mulai.strftime('%Y') }} – {{ edu.tahun_selesai.strftime('%Y') }}
+              {% elif edu.tahun_mulai %}
+                {{ edu.tahun_mulai.strftime('%Y') }} – Sekarang
+              {% else %}
+                [Tahun]
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-section">Belum ada data pendidikan</div>
+      {% endif %}
+    </div>
+
+    <!-- Skills Section -->
+    <div class="section">
+      <div class="section-title">Keahlian</div>
+      {% if skills and skills|length > 0 %}
+        
+        <!-- Hard Skills -->
+        {% set hard_skills = skills|selectattr("kategori", "equalto", "Hard Skill")|list %}
+        {% if hard_skills %}
+        <div class="skills-category">
+          <span class="skill-type">Hard Skills</span>
+          <span class="skill-list">
+            : {% for skill in hard_skills %}{{ skill.nama_skill }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+        {% endif %}
+
+        <!-- Soft Skills -->
+        {% set soft_skills = skills|selectattr("kategori", "equalto", "Soft Skill")|list %}
+        {% if soft_skills %}
+        <div class="skills-category">
+          <span class="skill-type">Soft Skills</span>
+          <span class="skill-list">
+            : {% for skill in soft_skills %}{{ skill.nama_skill }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+        {% endif %}
+
+        <!-- Software Skills -->
+        {% set software_skills = skills|selectattr("kategori", "equalto", "Software Skill")|list %}
+        {% if software_skills %}
+        <div class="skills-category">
+          <span class="skill-type">Software Skills</span>
+          <span class="skill-list">
+            : {% for skill in software_skills %}{{ skill.nama_skill }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+        {% endif %}
+
+        <!-- Jika tidak ada kategori yang cocok, tampilkan semua skill -->
+        {% if not hard_skills and not soft_skills and not software_skills %}
+        <div class="skills-category">
+          <span class="skill-type">Skills</span>
+          <span class="skill-list">
+            : {% for skill in skills %}{{ skill.nama_skill }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </span>
+        </div>
+        {% endif %}
+        
+      {% else %}
+        <div class="empty-section">Belum ada data keahlian</div>
+      {% endif %}
+    </div>
+
+    <!-- Experience Section -->
+    <div class="section">
+      <div class="section-title">Pengalaman</div>
+      {% if pengalaman and pengalaman|length > 0 %}
+        {% for exp in pengalaman %}
+        <div class="experience-item">
+          <div class="experience-header">
+            {% if exp.tanggal_kegiatan %}{{ exp.tanggal_kegiatan.strftime('%Y') }}{% else %}[Tahun]{% endif %} – 
+            {% if exp.judul %}{{ exp.judul }}{% else %}[Judul Kegiatan]{% endif %}
+          </div>
+          <div class="experience-period">
+            {% if exp.instansi %}{{ exp.instansi }}{% else %}[Nama Instansi]{% endif %}
+          </div>
+          {% if exp.keterangan %}
+          <div class="experience-description">{{ exp.keterangan }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-section">Belum ada data pengalaman</div>
+      {% endif %}
+    </div>
+
+  </div>
+</body>
+</html>
